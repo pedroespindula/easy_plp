@@ -1,7 +1,7 @@
 src = $(wildcard *.c)
 obj = $(src:.c=.o)
 
-LDFLAGS = -lm
+LDFLAGS = -lm -lcurl
 
 build-run: build
 	@bin/easy_plp
