@@ -16,4 +16,5 @@ build: $(obj)
 
 .PHONY: build-run build clean
 clean:
+	rm $(obj)
 	rm -rf ./bin/
