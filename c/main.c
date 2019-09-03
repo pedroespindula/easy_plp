@@ -35,6 +35,5 @@ int main(int argc, char **argv) {
     curl_easy_cleanup(curl);
   }
 
-  hello_world();
   return 0;
 }
