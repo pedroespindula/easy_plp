@@ -1,27 +1,26 @@
 #include <stdio.h> /* printf */
 #include <string.h> /* strrchr */
 #include <libgen.h>
-#define _GNU_SOURCE
+#include <stdlib.h>
 
 char* get_file_extension(char* path) {
     const char ch = '.';    
-    return strrchr(path, ch);
+    return strrchr(path, ch) + 1;
 }
 
 char* get_file_name(char* path) {
     char* basec = strdup(path);
-    return basename(basec);
+    char* bname = basename(basec);
+    const char ch = '.';
+    int n = strlen(bname) - strlen(strrchr(path, ch));
+    char* result;
+    result = malloc(sizeof(char));
+    strncpy(result, bname, n);
+    
+    return result;
 }
 
-char* get_dir_files(char* path) {
+char* get_dir_path(char* path) {
     char* dirc = strdup(path);
     return dirname(dirc);
-}
-
-// For temporary tests
-int main () {
-    printf("%s\n", get_file_extension("/a/b/c/teste.c")); // .c
-    printf("%s\n", get_file_name("/a/b/c/teste.c")); //teste.c
-    printf("%s\n", get_dir_files("/a/b/c/teste.c")); //  /a/b/c
-    return(0);
 }
