@@ -3,7 +3,6 @@
 #include <libgen.h>
 #include <stdlib.h>
 #include <dirent.h>
-#include <stdbool.h>
 
 char* get_file_extension(char* path) {
     const char ch = '.';    
@@ -31,18 +30,18 @@ int count_files (char * path) {
     struct dirent *lsdir;
     dir = opendir(path);
 
-    int files = 0;
+    int num_files = 0;
     while((lsdir = readdir(dir)) != NULL) {
          if (!strcmp(lsdir -> d_name, ".") || !strcmp(lsdir -> d_name, "..")) {
             continue;
         }
 
-        files++;
+        num_files++;
     }
 
     closedir(dir);
 
-    return files;
+    return num_files;
 }
 
 void get_dir_files (char* path, char *result[]) {
