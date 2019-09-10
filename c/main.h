@@ -39,4 +39,5 @@ char* get_prompt_config_exercises_path(void);
 // util.c
 char* get_file_name(char* path);
 char* get_file_extension(char* path);
-char* get_dir_files(char* path);
+int count_files(char* path);
+char* get_dir_files(char* path, char *result[]);
