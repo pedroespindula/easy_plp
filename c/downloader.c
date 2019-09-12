@@ -17,13 +17,13 @@ char* dl_exercise(char* exercise_id, char* dest_dir){
 	
 	curl = curl_easy_init();
 	if (curl) {
-       	fp = fopen(dest_dir,"wb");
-       	curl_easy_setopt(curl, CURLOPT_URL, urlCompleta);
-       	curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
-       	res = curl_easy_perform(curl);
-       	curl_easy_cleanup(curl);
-       	fclose(fp);
- 	}
+		fp = fopen(dest_dir,"wb");
+		curl_easy_setopt(curl, CURLOPT_URL, urlCompleta);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+		res = curl_easy_perform(curl);
+		curl_easy_cleanup(curl);
+		fclose(fp);
+	}
 };
 
 int main(){
