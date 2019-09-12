@@ -13,7 +13,7 @@ char* dl_exercise(char* exercise_id, char* dest_dir){
 
 	CURL *curl;
 	FILE *fp;
-    CURLcode res;
+	CURLcode res;
 	
 	curl = curl_easy_init();
 	if (curl) {
