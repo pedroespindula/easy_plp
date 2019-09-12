@@ -24,6 +24,7 @@ char* set_config_registry(char* new_registry);
 char* get_msg_welcome(void);
 char* get_msg_help(void);
 char* get_msg_exit(void);
+char* get_msg_invalid_command(void);
 
 char* get_header_easy_plp(void);
 char* get_header_exercise_info(void);
