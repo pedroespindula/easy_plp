@@ -11,7 +11,27 @@ char* get_msg_welcome(void) {
     return msg;
 };
 
-char* get_msg_help(void);
+char* get_msg_help(void) {
+	char* msg =
+		"Opção 1 - Testar diretorio atual: "
+		"Testa o diretorio atual exibindo o nome do exercicio, o seu ID, o arquivo testado, a linguagem do arquivo e o resultado dos testes\n"
+		"CLI: easy_plp <Caminho do diretório a ser testado>\n"
+		"\nOpção 2 - Baixar exercício: "
+		"Baixa o exercício a partir do ID\n"
+		"CLI (Por parâmetro): easy_plp download <ID do exercício>\n"
+		"CLI (Por flag): easy_plp -d <ID do exercício>\n"
+		"\nOpção 3 - Configurações: "
+		"Define configurações do usuario (Matrícula, nome e local dos exercícios)\n"
+		"CLI (Por parâmetro): easy_plp config <Nome do usuario> <Matricula do usuario>\n"
+		"CLI (Por flag): easy_plp -c <Nome do usuario> <Matricula do usuario>\n"
+		"\nOpção 4 - Ajuda: "
+		"Mostra os modos de execução, suas configurações e parametros\n"
+		"\nOpção 5 - Sair: "
+		"Para a execução do programa";
+
+	return msg;
+}
+
 char* get_msg_exit(void) {
 	char* msg =
 		"Obrigado por utilizar a nossa ferramenta!";

@@ -7,6 +7,9 @@ char* dl_exercise(char* exercise_id, char* dest_dir);
 
 // FUNÇÕES DO RUNNER
 // runner.c
+char* compile_file_c(char* path);
+char* compile_file_java(char* path);
+char* compile_file_haskell(char* path);
 char* run_dir(char* dir);
 char* run_file(char* file);
 
