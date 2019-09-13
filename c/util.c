@@ -78,7 +78,7 @@ char* get_output_from_csv_line(char* csv_line) {
   return ptr;
 }
 
-char* read_test_input(char* test_file_path) {
+char* read_test_input(char* test_file_path, char* inputs[]) {
   char buffer[255];
   FILE  *file_pointer;
 
@@ -87,14 +87,16 @@ char* read_test_input(char* test_file_path) {
     exit(1);
   }
 
+  int i = 0;
   while (fgets(buffer, 255, file_pointer)) {
-    printf("Entrada: %s\n", get_input_from_csv_line(buffer));
+    inputs[i] = get_input_from_csv_line(buffer);
+    i += 1;
   }
 
   return "";
 }
 
-char* read_test_output(char* test_file_path) {
+char* read_test_output(char* test_file_path, char* outputs[]) {
   char buffer[255];
   FILE  *file_pointer;
 
@@ -103,8 +105,10 @@ char* read_test_output(char* test_file_path) {
     exit(1);
   }
 
+  int i = 0;
   while (fgets(buffer, 255, file_pointer)) {
-    printf("Saida: %s\n", get_output_from_csv_line(buffer));
+    outputs[i] = get_output_from_csv_line(buffer);
+    i += 1;
   }
 
   return "";
