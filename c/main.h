@@ -8,7 +8,7 @@ char* dl_exercise(char* exercise_id, char* dest_dir);
 // FUNÇÕES DO RUNNER
 // runner.c
 char* run_dir(char* dir);
-char* run_file(char* file);
+void run_file(char* file, char* result);
 
 // FUNÇÕES DE CONFIGURAÇÃO
 // config.c

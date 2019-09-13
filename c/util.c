@@ -63,25 +63,36 @@ int get_dir_files (char* path, char *result[]) {
     return index;
 }
 
-char* get_input_from_csv_line(char* csv_line) {
-  char* delimiter = ",";
-  char *ptr = strtok(csv_line, delimiter);
+char* getfield(char* line, int num)
+{
+    char* tok;
+    for (tok = strtok(line, ","); tok && *tok; tok = strtok(NULL, ",\n")) {
+        if (!--num) {
+          return tok;
+        }
+    }
+    return NULL;
+}
 
-  return strdup(ptr);
+char* get_input_from_csv_line(char* csv_line) {
+  char* tmp = strdup(csv_line);
+  char* ret = getfield(csv_line, 2);
+  free(tmp);
+  return strdup(ret);
 }
 
 char* get_output_from_csv_line(char* csv_line) {
-  char* delimiter = ",";
-  char* ptr = strtok(csv_line, delimiter);
-
-  ptr = strtok(NULL, delimiter);
-
-  return strdup(ptr);
+  char* tmp = strdup(csv_line);
+  char* ret = getfield(csv_line, 3);
+  free(tmp);
+  return strdup(ret);
 }
 
 int read_test_input(char* test_file_path, char* inputs[]) {
-  char buffer[256];
-  FILE  *file_pointer = fopen("/Users/bruno/easy_plp/c/exec/dobro/dobro.csv", "r");
+  char *line = NULL;
+  size_t len = 0;
+  ssize_t read;
+  FILE *file_pointer = fopen(test_file_path, "r");
 
   if (file_pointer == NULL) {
     printf("Erro lendo arquivo (in) de teste: %s\n", test_file_path);
@@ -89,8 +100,9 @@ int read_test_input(char* test_file_path, char* inputs[]) {
   }
 
   int i = 0;
-  while (fgets(buffer, 256, file_pointer)) {
-    inputs[i] = strdup(get_output_from_csv_line(buffer));
+  while (read = getline(&line, &len, file_pointer) != -1) {
+    inputs[i] = '\0';
+    inputs[i] = get_input_from_csv_line(line);
     i += 1;
   }
 
@@ -100,17 +112,20 @@ int read_test_input(char* test_file_path, char* inputs[]) {
 }
 
 int read_test_output(char* test_file_path, char* outputs[]) {
-  char buffer[256];
-  FILE  *file_pointer = fopen("/Users/bruno/easy_plp/c/exec/dobro/dobro.csv", "r");
+  char *line = NULL;
+  size_t len = 0;
+  ssize_t read;
+  FILE *file_pointer = fopen(test_file_path, "r");
 
   if (file_pointer == NULL) {
-    printf("Erro lendo arquivo de (out) teste: %s\n", test_file_path);
+    printf("Erro lendo arquivo (out) de teste: %s\n", test_file_path);
     exit(1);
   }
 
   int i = 0;
-  while (fgets(buffer, 256, file_pointer)) {
-    outputs[i] = strdup(get_output_from_csv_line(buffer));
+  while (read = getline(&line, &len, file_pointer) != -1) {
+    outputs[i] = '\0';
+    outputs[i] = get_output_from_csv_line(line);
     i += 1;
   }
 
@@ -120,6 +135,7 @@ int read_test_output(char* test_file_path, char* outputs[]) {
 }
 
 void find_csv(char* dir, char* path) {
+  path[0] = '\0';
   char* files[256];
   char absolute[256];
   realpath(dir, absolute);

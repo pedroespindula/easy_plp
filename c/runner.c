@@ -3,25 +3,35 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libgen.h>
+#define MAX_PATH 256
 
 char* compile_file_c(char* path) {
-    int len_command = 30 * sizeof(char);
-    char* command = malloc(strlen(path) + len_command + 1);
-    char* dir = dirname(path);
+    char command[256];
+    char rpath[MAX_PATH];
+
+    char* ptr = realpath(path, rpath);
+    char* dir = dirname(strdup(rpath));
     char* outpath = strcat(dir, "/out.o");
 
     strcat(command, "gcc ");
-    strcat(command, path);
-    strcat(command, " -o");
+    strcat(command, rpath);
+    strcat(command, " -o ");
     strcat(command, outpath);
 
-    system(command);
+    int e = system(command);
+    if (e != 0) {
+      printf("Compilacao falhou.");
+      exit(1);
+    }
+
     return outpath;
 };
 
-char* run_file(char* path) {
+void run_file(char* path, char* result) {
   char* o = compile_file_c(path);
   char* command = malloc(strlen(o) + strlen("./"));
+  result[0] = '\0';
+  command[0] = '\0';
 
   pid_t pid = 0;
   int pipein[2];
@@ -35,12 +45,14 @@ char* run_file(char* path) {
   char* ins[256];
   char* outs[256];
 
+  printf("csv: %s\n", csv);
   int total = read_test_input(csv, ins);
   read_test_output(csv, outs);
-  strcat(command, "./");
   strcat(command, o);
 
-  static char result[256];
+  for (int i = 0; i < total; i++) {
+    printf("%s -> %s\n", ins[i], outs[i]);
+  }
 
   for (int i = 0; i < total; i++) {
     pipe(pipein);
@@ -64,11 +76,16 @@ char* run_file(char* path) {
     }
 
 
-    printf("input aqui: %s\n", ins[i]);
-    printf("out aqui: %s\n", outs[i]);
-    sprintf(input, "%s\n", ins[i]);
+    output[0] = '\0';
+    printf("out ta: %s\n", output);
+    sprintf(input, "%s", ins[i]);
+    printf("input: %s\n", input);
+    printf("esperado: %s\n", outs[i]);
     write(pipein[1], input, sizeof(input));
-    read(pipeout[0], output, 256);
+    read(pipeout[0], output, sizeof(output));
+    char nada[256];
+    fgets(nada, sizeof(output), output);  
+    printf("saiu: %s\n", nada);
 
     if (strcmp(output, outs[i]) == 0) {
       strcat(result, ".");
@@ -76,7 +93,5 @@ char* run_file(char* path) {
       strcat(result, "f");
     }
   }
-
-  return result;
 }
 
