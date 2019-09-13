@@ -13,22 +13,22 @@ char* get_msg_welcome(void) {
 
 char* get_msg_help(void) {
 	char* msg =
-		"Opção 1 - Testar diretorio atual: "
+		"# Opção 1 - Testar diretorio atual: \n"
 		"Testa o diretorio atual exibindo o nome do exercicio, o seu ID, o arquivo testado, a linguagem do arquivo e o resultado dos testes\n"
 		"CLI: easy_plp <Caminho do diretório a ser testado>\n"
-		"\nOpção 2 - Baixar exercício: "
+		"\n# Opção 2 - Baixar exercício: \n"
 		"Baixa o exercício a partir do ID\n"
 		"CLI (Por parâmetro): easy_plp download <ID do exercício>\n"
 		"CLI (Por flag): easy_plp -d <ID do exercício>\n"
-		"\nOpção 3 - Configurações: "
+		"\n# Opção 3 - Configurações: \n"
 		"Define configurações do usuario (Matrícula, nome e local dos exercícios)\n"
 		"CLI (Por parâmetro): easy_plp config <Nome do usuario> <Matricula do usuario>\n"
 		"CLI (Por flag): easy_plp -c <Nome do usuario> <Matricula do usuario>\n"
-		"\nOpção 4 - Ajuda: "
+		"\n# Opção 4 - Ajuda: \n"
+		"Mostra os modos de execução, suas configurações e parametros\n"
 		"CLI (Por parâmetro): easy_plp help\n"
 		"CLI (Por flag): easy_plp -h\n"
-		"Mostra os modos de execução, suas configurações e parametros\n"
-		"\nOpção 5 - Sair: "
+		"\n# Opção 5 - Sair: \n"
 		"Para a execução do programa\n";
 
 	return msg;
@@ -42,7 +42,7 @@ char* get_msg_exit(void) {
 };
 char* get_msg_invalid_command(void) {
   char* msg =
-    "Comando inválido! Insira um número apenas entre 1 e 5.\n";
+    "Comando inválido!\n";
 
   return msg;
 }
