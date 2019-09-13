@@ -28,6 +28,8 @@ char* set_config_registry(char* new_registry);
 char* get_msg_welcome(void);
 char* get_msg_help(void);
 char* get_msg_exit(void);
+char* get_msg_download_success(void);
+char* get_msg_config_save_last(void);
 char* get_msg_invalid_command(void);
 
 char* get_header_easy_plp(void);

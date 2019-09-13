@@ -40,6 +40,21 @@ char* get_msg_exit(void) {
 	
 	return msg;
 };
+
+char* get_msg_download_success(void) {
+  char* msg =
+    "Download executado com sucesso!\n";
+
+  return msg;
+}
+
+char* get_msg_config_save_last(void) {
+  char* msg =
+    "Para manter as configurações atuais de algum campo, use \"---\" como entrada\n";
+
+  return msg;
+}
+
 char* get_msg_invalid_command(void) {
   char* msg =
     "Comando inválido!\n";
