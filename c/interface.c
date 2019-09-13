@@ -48,6 +48,13 @@ char* get_msg_download_success(void) {
   return msg;
 }
 
+char* get_msg_download_failure(void) {
+  char* msg =
+    "Exercicio não encontrado! Tente novamente!\n";
+
+  return msg;
+}
+
 char* get_msg_config_save_last(void) {
   char* msg =
     "Para manter as configurações atuais de algum campo, use \"---\" como entrada\n";
