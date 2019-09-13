@@ -23,5 +23,5 @@ int main(int argc, char **argv) {
 
   printf("result: %s\n", result);
 
-  return 1;
+  return 0;
 }

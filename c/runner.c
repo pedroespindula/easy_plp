@@ -36,8 +36,6 @@ void run_file(char* path, char* result) {
   pid_t pid = 0;
   int pipein[2];
   int pipeout[2];
-  char input[256];
-  char output[256];
   char csv[256];
 
   find_csv(path, csv);
@@ -45,16 +43,13 @@ void run_file(char* path, char* result) {
   char* ins[256];
   char* outs[256];
 
-  printf("csv: %s\n", csv);
   int total = read_test_input(csv, ins);
   read_test_output(csv, outs);
   strcat(command, o);
 
   for (int i = 0; i < total; i++) {
-    printf("%s -> %s\n", ins[i], outs[i]);
-  }
-
-  for (int i = 0; i < total; i++) {
+    char* input = malloc(sizeof(char) * 256);
+    char* output = malloc(sizeof(char) * 256);
     pipe(pipein);
     pipe(pipeout);
 
@@ -77,21 +72,18 @@ void run_file(char* path, char* result) {
 
 
     output[0] = '\0';
-    printf("out ta: %s\n", output);
     sprintf(input, "%s", ins[i]);
-    printf("input: %s\n", input);
-    printf("esperado: %s\n", outs[i]);
     write(pipein[1], input, sizeof(input));
-    read(pipeout[0], output, sizeof(output));
-    char nada[256];
-    fgets(nada, sizeof(output), output);  
-    printf("saiu: %s\n", nada);
+    read(pipeout[0], output, sizeof(output) - 1);
 
     if (strcmp(output, outs[i]) == 0) {
       strcat(result, ".");
     } else {
       strcat(result, "f");
     }
+
+    free(input);
+    free(output);
   }
 }
 
