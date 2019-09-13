@@ -19,7 +19,7 @@ void exec_download(char* id) {
   printf(get_fmsg_exercise_download(), id);
   printf("\n");
 
-  int status = dl_exercise(id, "./");
+  int status = dl_exercise(id, get_config_exercises_path());
   if (status) {
     printf("%s\n", get_msg_download_success());
   } else {
@@ -29,9 +29,7 @@ void exec_download(char* id) {
 }
 
 void exec_config(char* name, char* registry, char* path) {
-  /* set_config_username(name); */
-  /* set_config_registry(registry); */
-  /* set_config_exercises_path(path); */
+  set_config(path, name, registry);
 }
 
 void exec_help(void) {

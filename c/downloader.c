@@ -14,8 +14,18 @@ int dl_exercise(char* exercise_id, char* dest_dir){
 	strcat(urlCompleta, extensao);
 
 	char* path_final = malloc(strlen(dest_dir) + strlen(exercise_id) + strlen(extensao) + 1);
+	char* mkdir_cmd = malloc(512);
 
 	strcpy(path_final, dest_dir);
+	strcat(path_final, "/");
+	strcat(path_final, exercise_id);
+
+  strcat(mkdir_cmd, "mkdir -p ");
+  strcat(mkdir_cmd, path_final);
+
+  system(mkdir_cmd);
+
+	strcat(path_final, "/");
 	strcat(path_final, exercise_id);
 	strcat(path_final, extensao);
 
@@ -26,6 +36,7 @@ int dl_exercise(char* exercise_id, char* dest_dir){
 	
 	curl = curl_easy_init();
 	if (curl) {
+    printf("Baixando exercicio para: %s\n", path_final);
 		fp = fopen(path_final,"wb");
 		curl_easy_setopt(curl, CURLOPT_URL, urlCompleta);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
