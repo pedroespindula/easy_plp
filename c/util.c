@@ -55,8 +55,17 @@ int get_dir_files (char* path, char *result[]) {
             continue;
         }
 
-        result[index] = lsdir -> d_name;
+
+        char* rel_path = lsdir -> d_name;
+        char* abs_path = malloc(512);
+        strcat(abs_path, path);
+        strcat(abs_path, "/");
+        strcat(abs_path, rel_path);
+
+        result[index] = strdup(abs_path);
+
         index++;
+        free(abs_path);
     }
 
     closedir(dir);
@@ -140,8 +149,6 @@ void find_csv(char* dir, char* path) {
   char absolute[256];
   realpath(dir, absolute);
   char* d = dirname(absolute);
-  strcat(path, d);
-  strcat(path, "/");
 
   int n = get_dir_files(d, files);
 
@@ -152,3 +159,4 @@ void find_csv(char* dir, char* path) {
     }
   }
 }
+

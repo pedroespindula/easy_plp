@@ -16,6 +16,7 @@ void run_file(char* file, char* result);
 
 // FUNÇÕES DE CONFIGURAÇÃO
 // config.c
+char* get_path(char* path);
 char* get_config_exercises_path(void);
 char* get_config_username(void);
 char* get_config_registry(void);

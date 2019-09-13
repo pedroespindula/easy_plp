@@ -12,6 +12,19 @@ void exec_test(char* path) {
   printf("%s", get_header_exercise_info());
   printf(get_fmsg_exercise_info(), "Nome do exercicio");
   printf("\n%s\n", get_header_exercise_results());
+
+  int size = count_files(get_path(path));
+  char* result[size];
+  get_dir_files(get_path(path), result);
+
+  for (int i = 0; i < size; i++) {
+    if (strcmp(get_file_extension(result[i]), "c") == 0) {
+      char testes[256];
+      run_file(result[i], testes);
+      printf("resultado de %s: %s\n", result[i], testes);
+
+    }
+  }
 }
 
 void exec_download(char* id) {
@@ -79,7 +92,7 @@ void exec_config_stdin(void) {
 
 // WRAPPERS DAS CHAMADAS POR COMMAND LINE
 void exec_test_cl(int size, char** args) {
-  char* path = args[2];
+  char* path = args[1];
   exec_test(path);
 }
 

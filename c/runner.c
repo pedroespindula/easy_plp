@@ -8,8 +8,9 @@
 char* compile_file_c(char* path) {
     char command[256];
     char rpath[MAX_PATH];
+    char pathdup[256];
 
-    char* ptr = realpath(path, rpath);
+    char* ptr = realpath(strdup(path), rpath);
     char* dir = dirname(strdup(rpath));
     char* outpath = strcat(dir, "/out.o");
 
@@ -36,20 +37,20 @@ void run_file(char* path, char* result) {
   pid_t pid = 0;
   int pipein[2];
   int pipeout[2];
-  char csv[256];
+  char csv[512];
 
   find_csv(path, csv);
 
-  char* ins[256];
-  char* outs[256];
+  char* ins[512];
+  char* outs[512];
 
   int total = read_test_input(csv, ins);
   read_test_output(csv, outs);
   strcat(command, o);
 
   for (int i = 0; i < total; i++) {
-    char* input = malloc(sizeof(char) * 256);
-    char* output = malloc(sizeof(char) * 256);
+    char* input = malloc(512);
+    char* output = malloc(512);
     pipe(pipein);
     pipe(pipeout);
 
@@ -70,11 +71,10 @@ void run_file(char* path, char* result) {
       exit(1);
     }
 
-
     output[0] = '\0';
-    sprintf(input, "%s", ins[i]);
+    sprintf(input, "%s\n", ins[i]);
     write(pipein[1], input, sizeof(input));
-    read(pipeout[0], output, sizeof(output) - 1);
+    read(pipeout[0], output, sizeof(output));
 
     if (strcmp(output, outs[i]) == 0) {
       strcat(result, ".");
