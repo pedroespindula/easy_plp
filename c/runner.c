@@ -86,4 +86,3 @@ void run_file(char* path, char* result) {
     free(output);
   }
 }
-

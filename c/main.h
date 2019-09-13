@@ -7,6 +7,9 @@ char* dl_exercise(char* exercise_id, char* dest_dir);
 
 // FUNÇÕES DO RUNNER
 // runner.c
+char* compile_file_c(char* path);
+char* compile_file_java(char* path);
+char* compile_file_haskell(char* path);
 char* run_dir(char* dir);
 void run_file(char* file, char* result);
 
@@ -16,9 +19,7 @@ char* get_config_exercises_path(void);
 char* get_config_username(void);
 char* get_config_registry(void);
 
-char* set_config_exercises_path(char* new_path);
-char* set_config_username(char* new_name);
-char* set_config_registry(char* new_registry);
+char* set_config(char* new_path, char* new_username, char* new_registry);
 
 // FUNÇÕES DE INTERFACE
 // interface.c
