@@ -46,6 +46,7 @@ char* get_prompt_config_exercises_path(void);
 char* get_file_name(char* path);
 char* get_file_extension(char* path);
 int count_files(char* path);
-char* get_dir_files(char* path, char *result[]);
+int get_dir_files(char* path, char *result[]);
 int read_test_input(char* test_file_path, char* inputs[]);
 int read_test_output(char* test_file_path, char* outputs[]);
+void find_csv(char* dir, char* path);

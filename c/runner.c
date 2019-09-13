@@ -28,23 +28,18 @@ char* run_file(char* path) {
   int pipeout[2];
   char input[256];
   char output[256];
+  char csv[256];
 
-  char* a[4];
-  a[0] = "8";
-  a[1] = "63";
-  a[2] = "1024";
-  a[3] = "2053";
+  find_csv(path, csv);
 
-  char* b[4];
-  b[0] = "16";
-  b[1] = "126";
-  b[2] = "2048";
-  b[3] = "4106";
+  char* ins[256];
+  char* outs[256];
 
+  int total = read_test_input(csv, ins);
+  read_test_output(csv, outs);
   strcat(command, "./");
   strcat(command, o);
 
-  int total = sizeof(a)/sizeof(a[0]);
   static char result[256];
 
   for (int i = 0; i < total; i++) {
@@ -69,16 +64,17 @@ char* run_file(char* path) {
     }
 
 
-    sprintf(input, "%s\n", a[i]);
+    printf("input aqui: %s\n", ins[i]);
+    printf("out aqui: %s\n", outs[i]);
+    sprintf(input, "%s\n", ins[i]);
     write(pipein[1], input, sizeof(input));
     read(pipeout[0], output, 256);
 
-    if (strcmp(output, b[i]) == 0) {
+    if (strcmp(output, outs[i]) == 0) {
       strcat(result, ".");
     } else {
       strcat(result, "f");
     }
-
   }
 
   return result;

@@ -44,7 +44,7 @@ int count_files (char * path) {
     return num_files;
 }
 
-void get_dir_files (char* path, char *result[]) {
+int get_dir_files (char* path, char *result[]) {
     DIR *dir;
     struct dirent *lsdir;
     dir = opendir(path);
@@ -60,56 +60,79 @@ void get_dir_files (char* path, char *result[]) {
     }
 
     closedir(dir);
+    return index;
 }
 
 char* get_input_from_csv_line(char* csv_line) {
   char* delimiter = ",";
   char *ptr = strtok(csv_line, delimiter);
 
-  return ptr;
+  return strdup(ptr);
 }
 
 char* get_output_from_csv_line(char* csv_line) {
   char* delimiter = ",";
-  char *ptr = strtok(csv_line, delimiter);
+  char* ptr = strtok(csv_line, delimiter);
 
   ptr = strtok(NULL, delimiter);
 
-  return ptr;
+  return strdup(ptr);
 }
 
 int read_test_input(char* test_file_path, char* inputs[]) {
-  char buffer[255];
-  FILE  *file_pointer;
+  char buffer[256];
+  FILE  *file_pointer = fopen("/Users/bruno/easy_plp/c/exec/dobro/dobro.csv", "r");
 
-  if ((file_pointer = fopen(test_file_path, "r")) == NULL) {
-    printf("Erro lendo arquivo de teste.");
+  if (file_pointer == NULL) {
+    printf("Erro lendo arquivo (in) de teste: %s\n", test_file_path);
     exit(1);
   }
 
   int i = 0;
-  while (fgets(buffer, 255, file_pointer)) {
-    inputs[i] = get_input_from_csv_line(buffer);
+  while (fgets(buffer, 256, file_pointer)) {
+    inputs[i] = strdup(get_output_from_csv_line(buffer));
     i += 1;
   }
+
+  fclose(file_pointer);
 
   return i;
 }
 
 int read_test_output(char* test_file_path, char* outputs[]) {
-  char buffer[255];
-  FILE  *file_pointer;
+  char buffer[256];
+  FILE  *file_pointer = fopen("/Users/bruno/easy_plp/c/exec/dobro/dobro.csv", "r");
 
-  if ((file_pointer = fopen(test_file_path, "r")) == NULL) {
-    printf("Erro lendo arquivo de teste.");
+  if (file_pointer == NULL) {
+    printf("Erro lendo arquivo de (out) teste: %s\n", test_file_path);
     exit(1);
   }
 
   int i = 0;
-  while (fgets(buffer, 255, file_pointer)) {
-    outputs[i] = get_output_from_csv_line(buffer);
+  while (fgets(buffer, 256, file_pointer)) {
+    outputs[i] = strdup(get_output_from_csv_line(buffer));
     i += 1;
   }
 
+  fclose(file_pointer);
+
   return i;
+}
+
+void find_csv(char* dir, char* path) {
+  char* files[256];
+  char absolute[256];
+  realpath(dir, absolute);
+  char* d = dirname(absolute);
+  strcat(path, d);
+  strcat(path, "/");
+
+  int n = get_dir_files(d, files);
+
+  for (int i = 0; i < n; i++) {
+    char* f = files[i];
+    if (strcmp(get_file_extension(f), "csv") == 0) {
+      strcat(path, f);
+    }
+  }
 }
