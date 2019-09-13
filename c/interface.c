@@ -25,9 +25,11 @@ char* get_msg_help(void) {
 		"CLI (Por parâmetro): easy_plp config <Nome do usuario> <Matricula do usuario>\n"
 		"CLI (Por flag): easy_plp -c <Nome do usuario> <Matricula do usuario>\n"
 		"\nOpção 4 - Ajuda: "
+		"CLI (Por parâmetro): easy_plp help\n"
+		"CLI (Por flag): easy_plp -h\n"
 		"Mostra os modos de execução, suas configurações e parametros\n"
 		"\nOpção 5 - Sair: "
-		"Para a execução do programa";
+		"Para a execução do programa\n";
 
 	return msg;
 }

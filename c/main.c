@@ -61,6 +61,7 @@ void exec_config(void) {
 }
 
 void exec_help(void) {
+  printf("%s\n", get_msg_help());
 }
 
 void exec_exit(void) {
