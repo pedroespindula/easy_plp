@@ -1,4 +1,0 @@
-Imprima Fizz se um numero for multiplo de 3 e Buzz se for multiplo de 5. Se for multiplo de 3 e 5 imprima FizzBuzz. Se não for multiplo de nenhum dos dois,imprima o proprio numero.,3,Fizz
-a,5,Buzz
-b,15,FizzBuzz
-c,11,11

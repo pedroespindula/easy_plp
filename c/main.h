@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // FUNÇÕES DO DOWNLOADER
 // downloader.c
@@ -15,6 +16,7 @@ void run_file(char* file, char* result);
 
 // FUNÇÕES DE CONFIGURAÇÃO
 // config.c
+char* get_path(char* path);
 char* get_config_exercises_path(void);
 char* get_config_username(void);
 char* get_config_registry(void);
@@ -26,6 +28,10 @@ char* set_config(char* new_path, char* new_username, char* new_registry);
 char* get_msg_welcome(void);
 char* get_msg_help(void);
 char* get_msg_exit(void);
+char* get_msg_download_success(void);
+char* get_msg_download_failure(void);
+char* get_msg_config_save_last(void);
+char* get_msg_invalid_command(void);
 
 char* get_header_easy_plp(void);
 char* get_header_exercise_info(void);

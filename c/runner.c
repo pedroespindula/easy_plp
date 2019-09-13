@@ -8,8 +8,9 @@
 char* compile_file_c(char* path) {
     char command[256];
     char rpath[MAX_PATH];
+    char pathdup[256];
 
-    char* ptr = realpath(path, rpath);
+    char* ptr = realpath(strdup(path), rpath);
     char* dir = dirname(strdup(rpath));
     char* outpath = strcat(dir, "/out.o");
 
@@ -34,22 +35,23 @@ void run_file(char* path, char* result) {
   command[0] = '\0';
 
   pid_t pid = 0;
-  int pipein[2];
-  int pipeout[2];
-  char csv[256];
+  char csv[512];
 
   find_csv(path, csv);
 
-  char* ins[256];
-  char* outs[256];
+  char* ins[512];
+  char* outs[512];
 
   int total = read_test_input(csv, ins);
   read_test_output(csv, outs);
   strcat(command, o);
 
   for (int i = 0; i < total; i++) {
-    char* input = malloc(sizeof(char) * 256);
-    char* output = malloc(sizeof(char) * 256);
+    char* input = malloc(128);
+    char* output = malloc(128);
+
+    int pipein[2];
+    int pipeout[2];
     pipe(pipein);
     pipe(pipeout);
 
@@ -64,24 +66,29 @@ void run_file(char* path, char* result) {
       //prctl(PR_SET_PDEATHSIG, SIGTERM);
 
       //replace tee with your process
-      execl(command, "o", NULL);
+      execl(command, "", NULL);
       // Nothing below this line should be executed by child process. If so,
       // it means that the execl function wasn't successfull, so lets exit:
       exit(1);
     }
 
-
     output[0] = '\0';
-    sprintf(input, "%s", ins[i]);
+    sprintf(input, "%s\n", ins[i]);
     write(pipein[1], input, sizeof(input));
-    read(pipeout[0], output, sizeof(output) - 1);
+    read(pipeout[0], output, sizeof(output));
+    char test[256];
+    strcpy(test, output);
 
-    if (strcmp(output, outs[i]) == 0) {
-      strcat(result, ".");
-    } else {
-      strcat(result, "f");
+    if (i != 0) {
+	    if (strcmp(test, outs[i]) == 0) {
+		    strcat(result, ".");
+	    } else {
+		    strcat(result, "f");
+	    }
     }
 
+    close(pipein[0]);
+    close(pipeout[1]);
     free(input);
     free(output);
   }
