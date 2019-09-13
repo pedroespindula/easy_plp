@@ -5,7 +5,7 @@
 #include <dirent.h>
 
 char* get_file_extension(char* path) {
-    const char ch = '.';    
+    const char ch = '.';
     return strrchr(path, ch) + 1;
 }
 
@@ -16,7 +16,7 @@ char* get_file_name(char* path) {
     int n = strlen(bname) - strlen(strrchr(path, ch));
     char* result = malloc(sizeof(char));
     strncpy(result, bname, n);
-    
+
     return result;
 }
 
@@ -78,7 +78,7 @@ char* get_output_from_csv_line(char* csv_line) {
   return ptr;
 }
 
-char* read_test_input(char* test_file_path, char* inputs[]) {
+int read_test_input(char* test_file_path, char* inputs[]) {
   char buffer[255];
   FILE  *file_pointer;
 
@@ -93,10 +93,10 @@ char* read_test_input(char* test_file_path, char* inputs[]) {
     i += 1;
   }
 
-  return "";
+  return i;
 }
 
-char* read_test_output(char* test_file_path, char* outputs[]) {
+int read_test_output(char* test_file_path, char* outputs[]) {
   char buffer[255];
   FILE  *file_pointer;
 
@@ -111,5 +111,5 @@ char* read_test_output(char* test_file_path, char* outputs[]) {
     i += 1;
   }
 
-  return "";
+  return i;
 }

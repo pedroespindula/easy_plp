@@ -47,5 +47,5 @@ char* get_file_name(char* path);
 char* get_file_extension(char* path);
 int count_files(char* path);
 char* get_dir_files(char* path, char *result[]);
-void read_test_input(char* test_file_path);
-void read_test_output(char* test_file_path);
+int read_test_input(char* test_file_path, char* inputs[]);
+int read_test_output(char* test_file_path, char* outputs[]);
