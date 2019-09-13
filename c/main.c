@@ -21,7 +21,8 @@ void exec_test(char* path) {
     if (strcmp(get_file_extension(result[i]), "c") == 0) {
       char testes[256];
       run_file(result[i], testes);
-      printf("resultado de %s: %s\n", result[i], testes);
+      printf("Arquivo: %s\n", result[i]);
+      printf("Resultado: %s\n", testes);
 
     }
   }
