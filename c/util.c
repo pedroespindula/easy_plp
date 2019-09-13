@@ -61,3 +61,51 @@ void get_dir_files (char* path, char *result[]) {
 
     closedir(dir);
 }
+
+char* get_input_from_csv_line(char* csv_line) {
+  char* delimiter = ",";
+  char *ptr = strtok(csv_line, delimiter);
+
+  return ptr;
+}
+
+char* get_output_from_csv_line(char* csv_line) {
+  char* delimiter = ",";
+  char *ptr = strtok(csv_line, delimiter);
+
+  ptr = strtok(NULL, delimiter);
+
+  return ptr;
+}
+
+char* read_test_input(char* test_file_path) {
+  char buffer[255];
+  FILE  *file_pointer;
+
+  if ((file_pointer = fopen(test_file_path, "r")) == NULL) {
+    printf("Erro lendo arquivo de teste.");
+    exit(1);
+  }
+
+  while (fgets(buffer, 255, file_pointer)) {
+    printf("Entrada: %s\n", get_input_from_csv_line(buffer));
+  }
+
+  return "";
+}
+
+char* read_test_output(char* test_file_path) {
+  char buffer[255];
+  FILE  *file_pointer;
+
+  if ((file_pointer = fopen(test_file_path, "r")) == NULL) {
+    printf("Erro lendo arquivo de teste.");
+    exit(1);
+  }
+
+  while (fgets(buffer, 255, file_pointer)) {
+    printf("Saida: %s\n", get_output_from_csv_line(buffer));
+  }
+
+  return "";
+}

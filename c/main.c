@@ -19,7 +19,10 @@ int main(int argc, char **argv) {
   }
 
 
-  printf("%s\n",dl_exercise("dobro", "./"));
+  /* printf("%s\n",dl_exercise("dobro", "./")); */
+
+  read_test_input("dobro.csv");
+  read_test_output("dobro.csv");
 
 
   return 0;

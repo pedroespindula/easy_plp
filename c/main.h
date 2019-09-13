@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // FUNÇÕES DO DOWNLOADER
 // downloader.c
@@ -46,3 +47,5 @@ char* get_file_name(char* path);
 char* get_file_extension(char* path);
 int count_files(char* path);
 char* get_dir_files(char* path, char *result[]);
+void read_test_input(char* test_file_path);
+void read_test_output(char* test_file_path);
