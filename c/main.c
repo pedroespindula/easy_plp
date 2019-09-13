@@ -18,9 +18,10 @@ int main(int argc, char **argv) {
     printf("%s\n", argv[i]);
   }
 
+  char result[256];
+  run_file("./exec/dobro/hello.c", result);
 
-  printf("%s\n",dl_exercise("dobro", "./"));
-
+  printf("result: %s\n", result);
 
   return 0;
 }
