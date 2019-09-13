@@ -1,37 +1,88 @@
+#include "main.h"
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <libgen.h>
+#define MAX_PATH 256
 
 char* compile_file_c(char* path) {
-    int len_command = 13 * sizeof(char);
-    char* command = malloc(strlen(path) + len_command + 1);
+    char command[256];
+    char rpath[MAX_PATH];
+
+    char* ptr = realpath(path, rpath);
+    char* dir = dirname(strdup(rpath));
+    char* outpath = strcat(dir, "/out.o");
 
     strcat(command, "gcc ");
-    strcat(command, path);
-    strcat(command, " -o out.o");
+    strcat(command, rpath);
+    strcat(command, " -o ");
+    strcat(command, outpath);
 
-    system(command);
-    return "out.o";
+    int e = system(command);
+    if (e != 0) {
+      printf("Compilacao falhou.");
+      exit(1);
+    }
+
+    return outpath;
 };
 
-char* compile_file_java(char* path) {
-    int len_command = 6 * sizeof(char);
-    char* command = malloc(strlen(path) + len_command + 1);
+void run_file(char* path, char* result) {
+  char* o = compile_file_c(path);
+  char* command = malloc(strlen(o) + strlen("./"));
+  result[0] = '\0';
+  command[0] = '\0';
 
-    strcat(command, "javac ");
-    strcat(command, path);
+  pid_t pid = 0;
+  int pipein[2];
+  int pipeout[2];
+  char csv[256];
 
-    system(command);
-    return "out.class";
-};
+  find_csv(path, csv);
 
-char* compile_file_haskell(char* path) {
-    int len_command = 11 * sizeof(char);
-    char* command = malloc(strlen(path) + len_command + 1);
+  char* ins[256];
+  char* outs[256];
 
-    strcat(command, "ghc ");
-    strcat(command, path);
-    strcat(command, " -o out");
+  int total = read_test_input(csv, ins);
+  read_test_output(csv, outs);
+  strcat(command, o);
 
-    system(command);
-    return "out";
-};
+  for (int i = 0; i < total; i++) {
+    char* input = malloc(sizeof(char) * 256);
+    char* output = malloc(sizeof(char) * 256);
+    pipe(pipein);
+    pipe(pipeout);
+
+    pid = fork();
+
+    if (pid == 0) {
+      // Child
+      dup2(pipein[0], STDIN_FILENO);
+      dup2(pipeout[1], STDOUT_FILENO);
+      dup2(pipeout[1], STDERR_FILENO);
+
+      //prctl(PR_SET_PDEATHSIG, SIGTERM);
+
+      //replace tee with your process
+      execl(command, "o", NULL);
+      // Nothing below this line should be executed by child process. If so,
+      // it means that the execl function wasn't successfull, so lets exit:
+      exit(1);
+    }
+
+
+    output[0] = '\0';
+    sprintf(input, "%s", ins[i]);
+    write(pipein[1], input, sizeof(input));
+    read(pipeout[0], output, sizeof(output) - 1);
+
+    if (strcmp(output, outs[i]) == 0) {
+      strcat(result, ".");
+    } else {
+      strcat(result, "f");
+    }
+
+    free(input);
+    free(output);
+  }
+}

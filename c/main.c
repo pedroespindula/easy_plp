@@ -7,7 +7,7 @@
 #include <curl/curl.h>
 #include "main.h"
 
-// WRAPPERS DAS FUNCIONALIDADES 
+// WRAPPERS DAS FUNCIONALIDADES
 void exec_test(char* path) {
   printf("%s", get_header_exercise_info());
   printf(get_fmsg_exercise_info(), "Nome do exercicio");
@@ -87,7 +87,7 @@ void exec_test_cl(int size, char** args) {
 
 void exec_download_cl(int size, char** args) {
   if (size >= 3) {
-    char* id = args[2]; 
+    char* id = args[2];
     exec_download(id);
   } else {
     exec_invalid();

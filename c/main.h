@@ -12,7 +12,7 @@ char* compile_file_c(char* path);
 char* compile_file_java(char* path);
 char* compile_file_haskell(char* path);
 char* run_dir(char* dir);
-char* run_file(char* file);
+void run_file(char* file, char* result);
 
 // FUNÇÕES DE CONFIGURAÇÃO
 // config.c
@@ -20,9 +20,7 @@ char* get_config_exercises_path(void);
 char* get_config_username(void);
 char* get_config_registry(void);
 
-char* set_config_exercises_path(char* new_path);
-char* set_config_username(char* new_name);
-char* set_config_registry(char* new_registry);
+char* set_config(char* new_path, char* new_username, char* new_registry);
 
 // FUNÇÕES DE INTERFACE
 // interface.c
@@ -54,4 +52,7 @@ char* get_prompt_config_exercises_path(void);
 char* get_file_name(char* path);
 char* get_file_extension(char* path);
 int count_files(char* path);
-char* get_dir_files(char* path, char *result[]);
+int get_dir_files(char* path, char *result[]);
+int read_test_input(char* test_file_path, char* inputs[]);
+int read_test_output(char* test_file_path, char* outputs[]);
+void find_csv(char* dir, char* path);
