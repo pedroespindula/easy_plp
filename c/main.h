@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // FUNÇÕES DO DOWNLOADER
 // downloader.c
