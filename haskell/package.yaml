@@ -40,6 +40,7 @@ executables:
     - directory
     - temporary
     - transformers
+    - util
 
 tests:
   easy-plp-test:
