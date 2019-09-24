@@ -14,6 +14,7 @@ import System.IO
 import System.IO.Temp
 import System.IO.Error
 import Util
+import Csv
 
 compileC :: FilePath -> FilePath -> IO GHC.IO.Exception.ExitCode
 compileC from to = do
@@ -63,10 +64,9 @@ runC ins exps file = do
 -- TODO: Cachar a leitura dos CSV
 runSingle :: FilePath -> IO (String, String)
 runSingle file = do
-  let inps = ["3", "4", "5"]
-  let outs = ["6", "8", "10"]
+  (ins, outs) <- readCSV file <&> unzip
   makeAbsolute file >>=
-    runC inps outs <&>
+    runC ins outs <&>
     tupleName
       where tupleName r = (takeFileName file, r)
 

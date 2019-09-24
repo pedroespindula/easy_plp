@@ -41,6 +41,7 @@ executables:
     - temporary
     - transformers
     - util
+    - csv
 
 tests:
   easy-plp-test:
