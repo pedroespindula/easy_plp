@@ -3,6 +3,7 @@ module Runner
     , runDir
     ) where
 
+import Data.Functor
 import Control.Exception
 import Control.Monad
 import GHC.IO.Exception
@@ -58,22 +59,22 @@ runC ins exps file = do
                 then "nC"
                 else compareOuts out exps
 
+-- TODO: Utilizar readCSV
+-- TODO: Cachar a leitura dos CSV
 runSingle :: FilePath -> IO (String, String)
 runSingle file = do
   let inps = ["3", "4", "5"]
   let outs = ["6", "8", "10"]
-  abs <- makeAbsolute file
-  res <- runC inps outs abs
-  return $ (takeFileName file, res)
+  makeAbsolute file >>=
+    runC inps outs <&>
+    tupleName
+      where tupleName r = (takeFileName file, r)
 
--- TODO: Utilizar readCSV
 runDir :: FilePath -> IO [(String, String)]
 runDir dir = do
-  let inps = ["3", "4", "5"]
-  let outs = ["6", "8", "10"]
-  files <- map (dir </>) . filter isC <$> listDirectory dir
-  res <- mapM (runC inps outs) files
-  return $ zip (map takeFileName files) res
+  listDirectory dir <&>
+    filter isC . map (dir </>)
+    >>= mapM runSingle
     where isC f = (takeExtension f) == ".c"
           isC :: FilePath -> Bool
 
