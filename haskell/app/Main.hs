@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import Runner
 
 main :: IO ()
 main = print "Hello World!\n"

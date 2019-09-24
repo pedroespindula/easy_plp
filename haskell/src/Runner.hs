@@ -1,7 +1,5 @@
-module Lib
-    ( compileC
-    , runC
-    , executeC
+module Runner
+    ( runSingle
     , runDir
     ) where
 
@@ -29,12 +27,12 @@ executeC bin input = do
                 $ setStderr closed
                 (shell bin)
   catch (withProcessWait_ program $ \p -> do
-                  hPutStrLn (getStdin p) input
-                  hFlush (getStdin p)
-                  o <- hGetLine (getStdout p)
-                  hClose (getStdin p)
-                  return o)
-                  handler
+          hPutStrLn (getStdin p) input
+          hFlush (getStdin p)
+          o <- hGetLine (getStdout p)
+          hClose (getStdin p)
+          return o)
+          handler
 
   where handler ex = return "<! EOF ERRO !>"
         handler :: IOError -> IO String
@@ -60,6 +58,13 @@ runC ins exps file = do
                 then "nC"
                 else compareOuts out exps
 
+runSingle :: FilePath -> IO (String, String)
+runSingle file = do
+  let inps = ["3", "4", "5"]
+  let outs = ["6", "8", "10"]
+  abs <- makeAbsolute file
+  res <- runC inps outs abs
+  return $ (takeFileName file, res)
 
 -- TODO: Utilizar readCSV
 runDir :: FilePath -> IO [(String, String)]
@@ -71,6 +76,4 @@ runDir dir = do
   return $ zip (map takeFileName files) res
     where isC f = (takeExtension f) == ".c"
           isC :: FilePath -> Bool
-
-
 
