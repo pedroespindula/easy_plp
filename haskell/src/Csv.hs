@@ -1,6 +1,7 @@
 module Csv
   ( Inex
   , readCSV
+  , getTestCsv
   ) where
 
 import Data.Functor
@@ -21,12 +22,13 @@ readCSVFile p = do
 
     where extract field = (field !! 1, field !! 2)
 
+getTestCsv :: FilePath -> IO String
+getTestCsv dir = listDirectory dir <&> head . filter isCSV . map (dir </>)
+  where isCSV = (==) ".csv" . takeExtension
 
 readCSV :: FilePath -> IO [Inex]
 readCSV file = do
   dir <- makeAbsolute file <&> takeDirectory
-  listDirectory dir <&> head . filter isCSV . map (dir </>) >>=
+  getTestCsv dir >>=
     makeAbsolute >>=
       readCSVFile
-
-  where isCSV = (==) ".csv" . takeExtension

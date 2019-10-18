@@ -1,11 +1,12 @@
 module Config where
 
+import Data.Functor
 import System.IO
 import System.Directory
 import System.FilePath
 
 configFile :: IO String
-configFile = (</> ".easy_plp") <$> getHomeDirectory
+configFile = getHomeDirectory <&> (</> ".easy_plp")
 
 config :: String -> String -> String -> IO ()
 config name matricula diretorio = do
