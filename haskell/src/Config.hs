@@ -1,3 +1,5 @@
+module Config where
+
 import System.IO
 import System.Directory
 import System.FilePath
@@ -7,9 +9,9 @@ configFile = (</> ".easy_plp") <$> getHomeDirectory
 
 config :: String -> String -> String -> IO ()
 config name matricula diretorio = do
-	config <- configFile
-        dirFinal <- (</> diretorio) <$> getHomeDirectory
-	writeFile config (name++"\n"++matricula++"\n"++dirFinal)
+  config <- configFile
+  dirFinal <- (</> diretorio) <$> getHomeDirectory
+  writeFile config (name++"\n"++matricula++"\n"++dirFinal)
 
 myRead :: Int -> IO (String)
 myRead x =  (!! x) . lines <$> (configFile >>= readFile)

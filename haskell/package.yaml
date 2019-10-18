@@ -42,6 +42,8 @@ executables:
     - transformers
     - util
     - csv
+    - http-conduit
+    - bytestring
 
 tests:
   easy-plp-test:
