@@ -33,6 +33,7 @@ executeC bin input = do
           hFlush (getStdin p)
           o <- hGetLine (getStdout p)
           hClose (getStdin p)
+          putStrLn o
           return o)
           handler
 

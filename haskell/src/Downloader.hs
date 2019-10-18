@@ -1,3 +1,5 @@
+module Downloader where
+
 import Network.HTTP.Conduit
 import qualified Data.ByteString.Lazy as L
 
