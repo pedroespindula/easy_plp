@@ -1,12 +1,14 @@
 module Runner
     ( runSingle
     , runDir
+    , run
     ) where
 
 import Data.Functor
 import Control.Exception
 import Control.Monad
 import GHC.IO.Exception
+import System.Directory
 import System.Directory
 import System.FilePath
 import System.Process.Typed
@@ -77,4 +79,14 @@ runDir dir = do
     >>= mapM runSingle
     where isC f = (takeExtension f) == ".c"
           isC :: FilePath -> Bool
+
+
+run :: FilePath -> IO [(String, String)]
+run path = do
+  isDir <- doesDirectoryExist path
+  if isDir
+    then runDir path
+    else do
+        r <- runSingle path
+        return [r]
 
