@@ -10,8 +10,7 @@ import Control.Monad
 dlExercise :: String -> IO ()
 dlExercise id = do
   dir <- (</> id) <$> getConfigDiretorioExercicios
-  notFound <- not <$> doesDirectoryExist dir
-  if notFound then createDirectory dir else return ()
+  createDirectoryIfMissing True dir
 
   let dlURL = "https://raw.githubusercontent.com/pedroespindula/easy_plp/master/exercicios/"  ++ id ++ ".csv"
   let finalPath = dir </> (id ++ ".csv")
