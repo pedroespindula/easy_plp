@@ -1,3 +1,5 @@
+#!/usr/bin/swipl
+
 :- initialization(main).
 
 main :-
