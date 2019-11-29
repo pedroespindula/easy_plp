@@ -1,5 +1,4 @@
 :- use_module(library(http/http_open)).
-:-initialization (main).
 
 downloader(Exercise) :-
     URL = "https://raw.githubusercontent.com/pedroespindula/easy_plp/init-prolog/exercicios/",
@@ -24,9 +23,3 @@ rowsToLists(Rows, Lists) :- maplist(rowToList, Rows, Lists).
 
 rowToList(Row, List) :-
     Row =.. [row|List].
-
-main:-
-    downloader("dobro"),
-    lerCsvRowList("./dobro.csv", [_|Lists]),
-    getByIndex(Lists,1,R),  
-    write(R).
