@@ -9,3 +9,12 @@ downloader(Exercise) :-
     open(File, write, Stream),
     copy_stream_data(In, Stream),
     close(In).
+
+lerCsvRowList(Exercise, Lists) :-
+    csv_read_file(Exercise, Rows, []),
+    rows_to_lists(Rows, Lists).
+
+rows_to_lists(Rows, Lists) :- maplist(row_to_list, Rows, Lists).
+
+row_to_list(Row, List) :-
+    Row =.. [row|List].
