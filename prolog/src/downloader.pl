@@ -12,9 +12,14 @@ downloader(Exercise) :-
 
 lerCsvRowList(Exercise, Lists) :-
     csv_read_file(Exercise, Rows, []),
-    rows_to_lists(Rows, Lists).
+    rowsToLists(Rows, Lists).
 
-rows_to_lists(Rows, Lists) :- maplist(row_to_list, Rows, Lists).
+getByIndex([],Index,[]).
+getByIndex([H|T],Index, [H1|T1]):-
+    nth0(Index,H,H1),
+    getByIndex(T,Index, T1).
 
-row_to_list(Row, List) :-
+rowsToLists(Rows, Lists) :- maplist(rowToList, Rows, Lists).
+
+rowToList(Row, List) :-
     Row =.. [row|List].
