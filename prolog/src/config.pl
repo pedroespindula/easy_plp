@@ -1,3 +1,5 @@
+:- module(config, [config/1, read_config/1]).
+
 config_file('/home/pedro/.easy_plp.config').
 
 config(Diretorio) :-
