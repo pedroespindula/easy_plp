@@ -6,23 +6,24 @@
 
 :- initialization(main).
 
+lerCompound(Result) :- read(Compound), term_to_atom(Compound, Result).
+
 operacao(1) :-
     writeln('Digite o caminho para o arquivo a ser testado:'),
+    lerCompound(NomeArquivoTeste),
     read(NomeArquivoTeste),
     writeln('Digite o caminho para o arquivo de teste:'),
-    read(NomeArquivoCsv),
-    term_to_atom(NomeArquivoTeste, AtomTest),
-    term_to_atom(NomeArquivoCsv, AtomCsv),
-    runner(AtomTest, AtomCsv).
+    lerCompound(NomeArquivoCsv),
+    runner(NomeArquivoTeste, NomeArquivoCsv).
 
 operacao(2) :-
-    writeln('Digite o nome do arquivo:'),
-    read(NomeArquivo),
-    downloader(NomeArquivo).
+    writeln('Digite o nome do exercicio:'),
+    read(NomeExercicio),
+    downloader(NomeExercicio).
 
 operacao(3) :-
     writeln('Digite o path para o diretorio que você quer guardar os arquivos:'),
-    read(Diretorio),
+    lerCompound(Diretorio),
     config(Diretorio).
 
     
