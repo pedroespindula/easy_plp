@@ -1,3 +1,4 @@
+:- module(downloader, [downloader/1, lerCsvRowList/2]).
 :- use_module(library(http/http_open)).
 
 downloader(Exercise) :-
