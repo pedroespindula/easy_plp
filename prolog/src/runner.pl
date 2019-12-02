@@ -1,4 +1,5 @@
-:-initialization(main).
+:- module(runner, [runner/2]).
+:- use_module(downloader).
 
 get_out(Input_value, Output_value):-
     process_create(path(bash),["-c","./run"],[stdin(pipe(In)),stdout(pipe(Out))]),
@@ -24,10 +25,18 @@ create_result([X1|Y1],[X2|Y2],Result):-
     compare_values(X1,X2,R1),
     string_concat(R1,R,Result).
 
-main:-
-    process_create(path(gcc),["hello.c","-o","run"],[]),
-    generate_list_results([1,2,4],Out),
-    create_result(Out,[1,4,8],Result),
+getByIndex([],_,[]).
+getByIndex([H|T],Index, [H1|T1]):-
+    nth0(Index,H,H1),
+    getByIndex(T,Index, T1).
+
+runner(NomeArquivoCompilar, NomeArquivoCsv):-
+    process_create(path(gcc),[NomeArquivoCompilar,"-o","run"],[]),
+    lerCsvRowList(NomeArquivoCsv, [_|Lists]),
+    getByIndex(Lists,1, Inputs),
+    getByIndex(Lists,2, Outs),
+    generate_list_results(Inputs, Out),
+    create_result(Out,Outs,Result),
     write(Result),
     process_create(path(bash),["-c","rm -rf run"],[]).
     
