@@ -15,7 +15,7 @@ lerCsvRowList(Exercise, Lists) :-
     csv_read_file(Exercise, Rows, []),
     rowsToLists(Rows, Lists).
 
-getByIndex([],Index,[]).
+getByIndex([],_,[]).
 getByIndex([H|T],Index, [H1|T1]):-
     nth0(Index,H,H1),
     getByIndex(T,Index, T1).
