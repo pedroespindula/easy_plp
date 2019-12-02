@@ -11,8 +11,8 @@ operacao(1) :-
     read(NomeArquivoTeste),
     writeln('Digite o caminho para o arquivo de teste:'),
     read(NomeArquivoCsv),
-    atom_string(AtomTest, NomeArquivoTeste),
-    atom_string(AtomCsv, NomeArquivoCsv),
+    term_to_atom(NomeArquivoTeste, AtomTest),
+    term_to_atom(NomeArquivoCsv, AtomCsv),
     runner(AtomTest, AtomCsv).
 
 operacao(2) :-
